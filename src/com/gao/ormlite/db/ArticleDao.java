@@ -16,7 +16,7 @@ public class ArticleDao {
     @SuppressWarnings("unchecked")
     public ArticleDao(Context context) {
         try {
-            mDatabaseHelper = DatabaseHelper.getInstance(context);
+            mDatabaseHelper = DatabaseHelper.getHelper(context);
             mArticleDao = mDatabaseHelper.getDao(Article.class);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -80,6 +80,24 @@ public class ArticleDao {
      */
     public List<Article> listByUserId(int userId) {
         try {
+            /*
+             * QueryBuilder<Article, Integer> articleBuilder = articleDaoOpe
+             * .queryBuilder(); QueryBuilder userBuilder =
+             * helper.getDao(User.class).queryBuilder();
+             * articleBuilder.join(userBuilder);
+             * 
+             * 
+             * Where<Article, Integer> where = queryBuilder.where();
+             * where.eq("user_id", 1); where.and(); where.eq("name", "xxx");
+             * 
+             * // 或者 articleDaoOpe.queryBuilder().// where().// eq("user_id",
+             * 1).and().// eq("name", "xxx"); //
+             * articleDaoOpe.updateBuilder().updateColumnValue
+             * ("name","zzz").where().eq("user_id", 1); where.or( //
+             * where.and(// where.eq("user_id", 1), where.eq("name", "xxx")),
+             * where.and(// where.eq("user_id", 2), where.eq("name", "yyy")));
+             */
+
             return mArticleDao.queryBuilder().where().eq("user_id", userId)
                     .query();
         } catch (SQLException e) {
@@ -87,5 +105,4 @@ public class ArticleDao {
         }
         return null;
     }
-
 }

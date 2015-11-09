@@ -14,22 +14,43 @@ public class UserDao {
 
     public UserDao(Context context) {
         this.mContext = context;
-        mDatabaseHelper = DatabaseHelper.getInstance(context);
         try {
+            mDatabaseHelper = DatabaseHelper.getHelper(context);
             mUserDao = mDatabaseHelper.getDao(User.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * 增加一个用户
+     * 
+     * @param user
+     * @throws SQLException
+     */
     public void add(User user) {
+        /*
+         * //事务操作
+         * TransactionManager.callInTransaction(helper.getConnectionSource(),
+         * new Callable<Void>() {
+         * 
+         * @Override public Void call() throws Exception { return null; } });
+         */
         try {
             mUserDao.create(user);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
-    // Other operation....
+    public User get(int id) {
+        try {
+            return mUserDao.queryForId(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

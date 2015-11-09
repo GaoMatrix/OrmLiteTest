@@ -3,14 +3,13 @@ package com.gao.ormlite.bean;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "article")
+@DatabaseTable(tableName = "tb_article")
 public class Article {
-
     @DatabaseField(generatedId = true)
     private int id;
     @DatabaseField
     private String title;
-    @DatabaseField(canBeNull = true, foreign = true, columnName = "id")
+    @DatabaseField(canBeNull = true, foreign = true, columnName = "user_id", foreignAutoRefresh = true)
     private User user;
 
     public int getId() {
